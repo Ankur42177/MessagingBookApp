@@ -3,9 +3,15 @@ module.exports.profile=function(req,res){
     return res.render('profile',{title:"userprofile"});
 }
 module.exports.Signup=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/user/userprofile');
+    }
     return res.render('user_sign_up',{title:"MessageBook||SignUp"});
 }
 module.exports.Signin=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/user/userprofile');
+    }
     return res.render('user_sign_in',{title:"MessageBook||SignIn"});
 }
 //get the sign up form
@@ -36,4 +42,6 @@ module.exports.create=function(req,res){
 //sign in controller for the sign in session
 module.exports.createSession=function(req,res){
 //later write code
+
+return res.redirect('/');
 }

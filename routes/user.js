@@ -1,10 +1,16 @@
 const express=require('express');
 const router=express.Router();
+const passport=require('passport');
 
 const userController=require('../controllers/user_controller');
-router.get('/userprofile',userController.profile);
+router.get('/userprofile',passport.checkAuthentication,userController.profile);
 router.get('/signin',userController.Signin);
 router.get('/signup',userController.Signup);
 router.post('/create',userController.create);
+//use passport as amiddleware to authenticate
+router.post('/create-session',passport.authenticate(
+    'local',
+    {failureRedirect:'/user/Signin'},
+),userController.createSession)
 
 module.exports=router;
