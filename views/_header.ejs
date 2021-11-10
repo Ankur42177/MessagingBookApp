@@ -1,3 +1,21 @@
 <header>
     app Header
+    <ul>
+        <% if(locals.user){%>
+        <li>
+            <a href='/user/userprofile'>
+            <%=user.name %></li>
+        </a>
+        <li> 
+            <a href='/user/Signout'>Sign out</a>
+        </li>
+        <%}else{%>
+            <li>
+                <a href='/user/Signin'>sign in</a>
+            </li>
+            <li> 
+                <a href='/user/Signup'>sign up</a>
+            </li>
+            <%}%>
+    </ul>
 </header>

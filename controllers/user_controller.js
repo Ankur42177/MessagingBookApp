@@ -45,3 +45,12 @@ module.exports.createSession=function(req,res){
 
 return res.redirect('/');
 }
+// signout controller in authentication session
+module.exports.destroySession=function(req,res){
+    req.logout();
+
+    return res.redirect('/');
+}
+module.exports.createPost=function(req,res){
+    return res.redirect('/user/userprofile');
+}

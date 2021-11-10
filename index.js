@@ -9,7 +9,17 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 
-
+//setting up mongo-store to create seession cokkie to store as intially it was temporary stored session cookie
+const MongoStore=require('connect-mongo')(session);
+// setting up sass 
+const sassMiddleware=require('node-sass-middleware');
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(expressLayout);
@@ -20,8 +30,11 @@ app.set('view engine','ejs');
 app.set('views','./views');
 //
 
-// adding a middleware for seesion cookie in passport to encrypte the userid
 
+// mongo store is used to store the session cookie in the db
+
+
+// adding a middleware for seesion cookie in passport to encrypte the userid
 app.use(session({
     name:'MessageBook',
     //todo change the secret before deployment in production mode
@@ -29,8 +42,17 @@ app.use(session({
     saveUninitialized:false,
     resave:false,
     cookie:{
-        maxage:(1000*60*100)
-    }
+        maxAge:(1000*60*100)
+    },
+    store: new MongoStore(
+        {
+            mongooseConnection:db,
+            autoRemove:'disabled'
+        },
+        function(err){
+            console.log(err||'connect-mongodb setup is ok');
+        }
+    )
 
 }));
 app.use(passport.initialize());
