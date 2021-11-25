@@ -19,11 +19,16 @@ app.use(sassMiddleware({
     debug:true,
     outputStyle:'extended',
     prefix:'/css'
-}))
+}));
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(expressLayout);
+
 app.use(express.static('./assets'));
+
+app.use(expressLayout);
+
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
 
 //setup a view engine 
 app.set('view engine','ejs');
@@ -60,8 +65,7 @@ app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
 //extract styles and sub-pages into the layouts
-app.set('layout extractStyles',true);
-app.set('layout extractScripts',true);
+
 
 //use express router 
 app.use('/',require('./routes/index'));
