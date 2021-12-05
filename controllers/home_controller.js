@@ -4,11 +4,29 @@ module.exports.home=function(req,res){
     // res.cookie('ank',909);//changing cookie at a server side in response which goes to browser
    
     // return res.render('home',{title:"ankurmessagebook"});
-    Post.find({},function(err,post){
+    // Post.find({},function(err,post){
+    //     return res.render('home',{
+    //         title:"MessageBook|Home",
+    //         post:post
+    //     });
+
+    // });
+
+    //pepopulate the post 
+
+    Post.find({})
+    .populate('user')
+    .populate({
+        path:'comment',
+        populate:{
+            path:'user'
+        }
+    })
+    .exec(function(err,post){
         return res.render('home',{
             title:"MessageBook|Home",
             post:post
-        });
-
     });
+});
+
 }
