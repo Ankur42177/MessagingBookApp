@@ -1,7 +1,7 @@
 
 <!-- <link rel="stylesheet" href="/css/home.css">
     -->
-    <h1>MessageBook via
+    <h1>MessageBook Ankur||
         <%=title%>
     </h1>
     
@@ -25,6 +25,14 @@
                             <%= post.user.name %>
                         </small>
                     </p>
+                    <p> 
+                        <% if(locals.user && locals.user.id==post.user.id){%>
+                            <small> 
+                                <a href="/post/destroy/<%=post.id%>">X</a>
+                            </small>
+
+                       <% }%>
+                    </p>
                    
                     <div class="post-comments"> 
                         <%if(locals.user){%>
@@ -44,6 +52,14 @@
                                     <small> 
                                         <%=comment.user.name %>
                                     </small>
+                                </p>
+                                <p> 
+                                    <% if(locals.user && locals.user.id==comment.user.id){%>
+                                        <small> 
+                                            <a href="/comments/destroy/<%=comment.id%>">Y</a>
+                                        </small>
+            
+                                   <% }%>
                                 </p>
                                 
                                 <%}%>
